@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+// 'use strict';
+
+function LeakObject () {
+  this.value = new Array(1000).join(new Array(1000).join(Math.random()));
+}
+
+function addLeak () {
+  a = new LeakObject();
+  // this.a = new LeakObject();
+  // window.a = new LeakObject();
+}
+
+function releaseLeak () {
+  window.a = null;
+}
+</script>
+</head>
+<body>
+<button onclick="addLeak()">Add Leak</button>
+<button onclick="releaseLeak()">Release Leak</button>
+</body>
+</html>
