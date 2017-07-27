@@ -5,13 +5,13 @@
 'use strict';
 
 function LeakObject () {
-  this.value = new Array(1000).join(new Array(1000).join(Math.random()));
+  this.value = new Array(1024 * 1024).join('X');
 }
 
 function addLeak () {
-  var a = new LeakObject();
+  var leakObject = new LeakObject();
   window.onresize = function () {
-    console.log(a.value.length);
+    console.log(leakObject.value.length);
   };
 }
 

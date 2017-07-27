@@ -5,14 +5,14 @@
 'use strict';
 
 function LeakObject () {
-  this.value = new Array(1000).join(new Array(1000).join('' + Math.random()));
+  this.value = new Array(1024 * 1024).join('X');
 }
 
-var newObj = null;
+var leakObject = null;
 
 function addLeak() {
-  var oldObj = newObj;
-  newObj = {
+  var oldObj = leakObject;
+  leakObject = {
     leakObj: new LeakObject(),
     // oldObj: oldObj
     closure: function () {
@@ -22,7 +22,7 @@ function addLeak() {
 }
 
 function releaseLeak () {
-  newObj = null;
+  leakObject = null;
 }
 </script>
 </head>

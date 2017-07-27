@@ -2,20 +2,18 @@
 <html>
 <head>
 <script>
-// 'use strict';
+'use strict';
 
 function LeakObject () {
-  this.value = new Array(1000).join(new Array(1000).join(Math.random()));
+  this.value = new Array(1024 * 1024).join('X');
 }
 
 function addLeak () {
-  a = new LeakObject();
-  // this.a = new LeakObject();
-  // window.a = new LeakObject();
+  window.leakObject = new LeakObject();
 }
 
 function releaseLeak () {
-  window.a = null;
+  window.leakObject = null;
 }
 </script>
 </head>

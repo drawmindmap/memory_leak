@@ -5,18 +5,19 @@
 'use strict';
 
 function LeakObject () {
-  this.value = new Array(1000).join(new Array(1000).join('' + Math.random()));
+  this.value = new Array(1024 * 1024).join('X');
 }
 
 function addLeak () {
-  var a = new LeakObject();
+  var leakObject = new LeakObject();
   window._intervalId = setInterval(function () {
-    a.value.length;
+    console.log(leakObject.value.length);
   }, 1000);
 }
 
 function releaseLeak () {
   clearInterval(window._intervalId);
+  window._intervalId = null;
 }
 </script>
 </head>
